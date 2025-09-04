@@ -44,9 +44,8 @@ void	print_status(t_philo *philo, char *str)
 {
 	size_t	time;
 
-	//pthread_mutex_lock(&philo->rules->write_lock);
+	pthread_mutex_lock(&philo->rules->write_lock);
 	time = get_current_time() - philo->rules->sim_start;
-	if (!philo->rules->dead_or_alive)
-		printf("%zu %i %s\n", time, philo->philo_id, str);
-	//pthread_mutex_unlock(&philo->rules->write_lock);
+	printf("%zu %i %s\n", time, philo->philo_id, str);
+	pthread_mutex_unlock(&philo->rules->write_lock);
 }

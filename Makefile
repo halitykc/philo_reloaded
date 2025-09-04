@@ -5,7 +5,9 @@ LDFLAGS = -pthread
 SRCS = main.c \
        utils.c \
 	   init.c \
-	   routine.c
+	   routine.c \
+	   bigbrother.c 
+	
 OBJS = $(SRCS:.c=.o)
 
 NAME = philo

@@ -31,6 +31,7 @@ void    init_philos(t_table *table)
         table->philo[i].l_fork = &table->fork[i];
         table->philo[i].r_fork = &table->fork[(i + 1) % table->rules.total_philo];
         table->philo[i].rules = &table->rules;
+        table->philo->alive = 0;
     }
     
 }
@@ -59,12 +60,17 @@ void    init_table(t_table *table, char **argv)
 void    start_threads(t_table *table)
 {
     int i,c;
+    pthread_t   bigbro;
 
     i = -1;
     table->rules.sim_start = get_current_time();
+    pthread_create(&bigbro,NULL, bigbrother, &table->rules);
     while (++i < table->rules.total_philo)
         pthread_create(&table->philo[i].thread, NULL, routine, &table->philo[i]);
     c = -1;
+    
     while (++c < table->rules.total_philo)
 		pthread_join(table->philo[c].thread, NULL);
+    pthread_join(bigbro, NULL);
+
 }

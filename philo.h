@@ -35,6 +35,7 @@ typedef struct s_philo
     pthread_t thread;
     int philo_id;//
     int meal_eatten;//
+    int alive;
     pthread_mutex_t *l_fork;//
     pthread_mutex_t *r_fork;//
     size_t  last_meal; //
@@ -51,15 +52,16 @@ typedef struct s_table
 
 
 size_t				get_current_time(void);
-void	ft_usleep(size_t milliseconds);
-int	ft_atoi(char *nptr);
-void    init_mutex(t_table *table);
-void    init_philos(t_table *table);
-void    init_program(t_table *table, char **argv);
-void    init_table(t_table *table, char **argv);
-void    start_threads(t_table *table);
-void    *routine(void    *args);
-void	print_status(t_philo *philo, char *str);
+void	            ft_usleep(size_t milliseconds);
+int	                ft_atoi(char *nptr);
+void                init_mutex(t_table *table);
+void                init_philos(t_table *table);
+void                init_program(t_table *table, char **argv);
+void                init_table(t_table *table, char **argv);
+void                start_threads(t_table *table);
+void                *routine(void    *args);
+void                *bigbrother(void    *args);
+void	            print_status(t_philo *philo, char *str);
 
 
 #endif
