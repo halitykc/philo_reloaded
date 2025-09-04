@@ -2,46 +2,48 @@
 
 #include "philo.h"
 
+
+int is_dead(t_philo *philo)
+{
+    pthread_mutex_lock(&philo->rules->meal_lock);
+    if (get_current_time() - philo->last_meal >= philo->rules->time_to_die)
+    {
+        pthread_mutex_unlock(&philo->rules->meal_lock);
+        return 1;
+    }
+    pthread_mutex_unlock(&philo->rules->meal_lock);
+    return 0;
+}
+
+int check_dead(t_rules *rules)
+{
+    int i;
+
+    i = -1;
+    while (++i < rules->total_philo)
+    {
+        if (is_dead(&rules->philos[i]))
+        {
+            print_status(&rules->philos[i], "Is dead");
+            pthread_mutex_lock(&rules->dead_lock);
+            rules->philos[i].dead = 1;
+            rules->dead_or_alive = 1;
+            pthread_mutex_unlock(&rules->dead_lock);
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void    *bigbrother(void    *args)
 {
     t_rules *rules;
-    int i;
-    int f;
-    size_t  last_meal_time;
 
     rules = (t_rules *) args;
-    ft_usleep(100);
     while (1)
     {
-        i = 0;
-        f = 0;
-        while (i < rules->total_philo)
-        {
-            pthread_mutex_lock(&rules->meal_lock);
-            last_meal_time = get_current_time() - rules->philos[i].last_meal;
-            if (rules->must_eat != -1 && rules->philos[i].meal_eatten >= rules->must_eat)
-                f++;
-            pthread_mutex_unlock(&rules->meal_lock);
-            
-            if (!(last_meal_time <= rules->time_to_die))
-            {
-                pthread_mutex_lock(&rules->dead_lock);
-                rules->dead_or_alive = 1;
-                rules->philos[i].alive = 1;
-                pthread_mutex_unlock(&rules->dead_lock);
-                print_death(&rules->philos[i], "Is dead");
-                return NULL;
-            }    
-            i++;
-        }
-        if (rules->must_eat != -1 && f == rules->total_philo)
-        {
-            pthread_mutex_lock(&rules->dead_lock);
-            rules->dead_or_alive = 1;
-            pthread_mutex_unlock(&rules->dead_lock);
-            return NULL;
-        }
-        
+        if (check_dead(rules))
+            break;
     }
     return NULL;
 }

@@ -35,7 +35,7 @@ typedef struct s_philo
     pthread_t thread;
     int philo_id;//
     int meal_eatten;//
-    int alive;
+    int dead;
     pthread_mutex_t *l_fork;//
     pthread_mutex_t *r_fork;//
     size_t  last_meal; //
