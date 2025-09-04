@@ -31,7 +31,7 @@ int check_dead(t_rules *rules)
             pthread_mutex_unlock(&rules->dead_lock);
             return 1;
         }
-        ft_usleep(1000);
+        ft_usleep(110);
     }
     return 0;
 }
