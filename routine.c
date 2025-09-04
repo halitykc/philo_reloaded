@@ -50,9 +50,7 @@ void    philo_eat(t_philo *philo)
     philo->last_meal = get_current_time();
     philo->meal_eatten++;
     pthread_mutex_unlock(&philo->rules->meal_lock);
-
     ft_usleep(philo->rules->time_to_eat);
-
     pthread_mutex_unlock(philo->l_fork);
     pthread_mutex_unlock(philo->r_fork);
 }
@@ -81,7 +79,6 @@ void    *routine(void    *args)
     philo->last_meal = get_current_time();
     if (philo->philo_id % 2 == 0)
         ft_usleep(20);
-    
     while (1)
     {
         pthread_mutex_lock(&philo->rules->dead_lock);

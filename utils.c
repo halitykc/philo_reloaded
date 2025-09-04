@@ -15,7 +15,7 @@ void	ft_usleep(size_t milliseconds)
 
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
-		usleep(50);
+		usleep(150);
 }
 
 int	ft_atoi(char *nptr)
