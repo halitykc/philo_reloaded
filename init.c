@@ -27,11 +27,11 @@ void    init_philos(t_table *table)
     while (++i < table->rules.total_philo)
     {
         table->philo[i].philo_id = i + 1;
-        table->philo[i].meal_eatten = 1;
+        table->philo[i].meal_eatten = 0;
         table->philo[i].l_fork = &table->fork[i];
         table->philo[i].r_fork = &table->fork[(i + 1) % table->rules.total_philo];
         table->philo[i].rules = &table->rules;
-        table->philo->alive = 0;
+        table->philo[i].alive = 0;
     }
     
 }

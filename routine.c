@@ -5,24 +5,32 @@
 
 void    philo_eat(t_philo *philo)
 {
-    if (philo->philo_id % 2 == 0)
+    if  (philo->rules->total_philo == 1)
     {
-        pthread_mutex_lock(philo->r_fork);
-        print_status(philo, "Has taken a fork");
         pthread_mutex_lock(philo->l_fork);
+        print_status(philo, "Has taken a fork");
+        ft_usleep(philo->rules->time_to_die);
+        pthread_mutex_unlock(philo->l_fork);
+        return;
+    }
+    if (philo->l_fork < philo->r_fork)
+    {
+        pthread_mutex_lock(philo->l_fork);
+        print_status(philo, "Has taken a fork");
+        pthread_mutex_lock(philo->r_fork);
         print_status(philo, "Has taken a fork");
     }
     else
     {
-        pthread_mutex_lock(philo->l_fork);
-        print_status(philo, "Has taken a fork");
         pthread_mutex_lock(philo->r_fork);
+        print_status(philo, "Has taken a fork");
+        pthread_mutex_lock(philo->l_fork);
         print_status(philo, "Has taken a fork");
     }
     pthread_mutex_lock(&philo->rules->meal_lock);
     
-    print_status(philo, "Is eating");
     philo->last_meal = get_current_time();
+    print_status(philo, "Is eating");
     philo->meal_eatten++;
     ft_usleep(philo->rules->time_to_eat);
 
@@ -35,13 +43,13 @@ void    philo_eat(t_philo *philo)
 
 void philo_sleep(t_philo *philo)
 {
-    print_status(philo, "Is Sleeping");
+    print_status(philo, "Is sleeping");
     ft_usleep(philo->rules->time_to_sleep);
 }
 
 void  philo_think(t_philo *philo)
 {
-    print_status(philo, "Is Thinking");
+    print_status(philo, "Is thinking");
 }
 
 void    *routine(void    *args)
@@ -50,13 +58,17 @@ void    *routine(void    *args)
 
     philo = (t_philo *)args;
     philo->last_meal = get_current_time();
+    if (philo->philo_id % 2 == 0)
+    {
+        ft_usleep(2);
+    }
+    
     while (1)
     {
         pthread_mutex_lock(&philo->rules->dead_lock);
         if (philo->rules->dead_or_alive)
         {
             pthread_mutex_unlock(&philo->rules->dead_lock);
-            printf("BREAK\n");
             break;
         }
         pthread_mutex_unlock(&philo->rules->dead_lock);

@@ -62,6 +62,7 @@ void                start_threads(t_table *table);
 void                *routine(void    *args);
 void                *bigbrother(void    *args);
 void	            print_status(t_philo *philo, char *str);
+void	print_death(t_philo *philo, char *str);
 
 
 #endif
