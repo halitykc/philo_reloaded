@@ -24,13 +24,14 @@ int check_dead(t_rules *rules)
     {
         if (is_dead(&rules->philos[i]))
         {
-            print_status(&rules->philos[i], "Is dead");
+            print_status(&rules->philos[i], "is dead");
             pthread_mutex_lock(&rules->dead_lock);
             rules->philos[i].dead = 1;
             rules->dead_or_alive = 1;
             pthread_mutex_unlock(&rules->dead_lock);
             return 1;
         }
+        ft_usleep(1000);
     }
     return 0;
 }

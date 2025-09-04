@@ -65,11 +65,14 @@ void    start_threads(t_table *table)
     i = -1;
     table->rules.sim_start = get_current_time();
     while (++i < table->rules.total_philo)
+    {
         pthread_create(&table->philo[i].thread, NULL, routine, &table->philo[i]);
+        ft_usleep(1);
+    }
     pthread_create(&bigbro,NULL, bigbrother, &table->rules);
     c = -1;
-    pthread_join(bigbro, NULL);
     while (++c < table->rules.total_philo)
-		pthread_join(table->philo[c].thread, NULL);
+        pthread_join(table->philo[c].thread, NULL);
+    pthread_join(bigbro, NULL); 
 
 }
