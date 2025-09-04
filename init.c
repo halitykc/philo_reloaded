@@ -1,0 +1,70 @@
+
+
+#include "philo.h"
+
+///////////////////////////////////////////
+
+void    init_mutex(t_table *table)
+{
+    int i;
+
+    i = -1;
+    while (++i < table->rules.total_philo)
+    {
+        pthread_mutex_init(&table->fork[i], NULL);
+    }
+    pthread_mutex_init(&table->rules.dead_lock, NULL);
+    pthread_mutex_init(&table->rules.write_lock, NULL);
+    pthread_mutex_init(&table->rules.meal_lock, NULL);
+    
+}
+
+void    init_philos(t_table *table)
+{
+    int i;
+
+    i = -1;
+    while (++i < table->rules.total_philo)
+    {
+        table->philo[i].philo_id = i + 1;
+        table->philo[i].meal_eatten = 1;
+        table->philo[i].l_fork = &table->fork[i];
+        table->philo[i].r_fork = &table->fork[(i + 1) % table->rules.total_philo];
+        table->philo[i].rules = &table->rules;
+    }
+    
+}
+
+void    init_program(t_table *table, char **argv)
+{
+    table->rules.total_philo = ft_atoi(argv[1]);
+    table->rules.dead_or_alive = 0;
+    init_mutex(table);
+    if (argv[5])
+        table->rules.must_eat = ft_atoi(argv[5]);         
+    else
+        table->rules.must_eat = -1;         
+    table->rules.time_to_die = ft_atoi(argv[2]);
+    table->rules.time_to_eat = ft_atoi(argv[3]);
+    table->rules.time_to_sleep = ft_atoi(argv[4]);
+    table->rules.philos = table->philo;
+}
+
+void    init_table(t_table *table, char **argv)
+{
+    init_program(table, argv);
+    init_philos(table);
+}
+
+void    start_threads(t_table *table)
+{
+    int i,c;
+
+    i = -1;
+    table->rules.sim_start = get_current_time();
+    while (++i < table->rules.total_philo)
+        pthread_create(&table->philo[i].thread, NULL, routine, &table->philo[i]);
+    c = -1;
+    while (++c < table->rules.total_philo)
+		pthread_join(table->philo[c].thread, NULL);
+}
