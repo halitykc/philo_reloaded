@@ -15,6 +15,18 @@ int is_dead(t_philo *philo)
     return 0;
 }
 
+int is_starving(t_philo *philo)
+{
+    size_t diff;
+
+    pthread_mutex_lock(&philo->rules->meal_lock);
+    diff = get_current_time() - philo->last_meal;
+    pthread_mutex_unlock(&philo->rules->meal_lock);
+    if (diff > philo->rules->time_to_die / 2)
+        return (1);
+    return (0);
+}
+
 int check_dead(t_rules *rules)
 {
     int i;
@@ -38,12 +50,20 @@ int check_dead(t_rules *rules)
 void    *bigbrother(void    *args)
 {
     t_rules *rules;
-
+    int i;
+    
     rules = (t_rules *) args;
+    ft_usleep(30);
     while (1)
     {
         if (check_dead(rules))
             break;
+        i = -1;
+        while (++i < rules->total_philo)
+        {
+            if (is_starving(&rules->philos[i]))
+                ft_usleep(1);
+        }
     }
     return NULL;
 }

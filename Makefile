@@ -16,6 +16,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
+	clear
 
 clean:
 	@rm -f $(OBJS)
@@ -24,7 +25,7 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
+	clear
 test : all clean
 	./$(NAME) 5 800 400 300
 
