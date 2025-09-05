@@ -47,16 +47,39 @@ int check_dead(t_rules *rules)
     return 0;
 }
 
+int all_ate(t_rules *rules)
+{
+    int i;
+
+    if (rules->must_eat <= 0)
+        return (0);
+    i = -1;
+    while (++i < rules->total_philo)
+    {
+        pthread_mutex_lock(&rules->meal_lock);
+        if (rules->philos[i].meal_eatten < rules->must_eat)
+        {
+            pthread_mutex_unlock(&rules->meal_lock);
+            return (0);
+        }
+        pthread_mutex_unlock(&rules->meal_lock);
+    }
+    pthread_mutex_lock(&rules->dead_lock);
+    rules->dead_or_alive = 1;
+    pthread_mutex_unlock(&rules->dead_lock);
+    return 1;
+}
+
 void    *bigbrother(void    *args)
 {
     t_rules *rules;
     int i;
-    
+
     rules = (t_rules *) args;
     ft_usleep(30);
     while (1)
     {
-        if (check_dead(rules))
+        if (check_dead(rules) || all_ate(rules))
             break;
         i = -1;
         while (++i < rules->total_philo)
