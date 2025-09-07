@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:40 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:42:42 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:44:38 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define ERR1 "Error:./philo <philo no> "
 # define ERR2 "<timetodie> <timetoeat> <timetosleep> <timestoeat>"
+# define MAX_PHILO 200
 
 typedef struct s_rules
 {
@@ -54,8 +55,8 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	t_philo			philo[200];
-	pthread_mutex_t	fork[200];
+	t_philo			philo[MAX_PHILO];
+	pthread_mutex_t	fork[MAX_PHILO];
 	t_rules			rules;
 }					t_table;
 
