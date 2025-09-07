@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:40 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:36:10 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:42:42 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# define ERR1 "Error:./philo <philo no> "
+# define ERR2 "<timetodie> <timetoeat> <timetosleep> <timestoeat>"
 
 typedef struct s_rules
 {
