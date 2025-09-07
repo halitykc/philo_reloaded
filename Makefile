@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 LDFLAGS = -pthread
 
 SRCS = main.c \
@@ -28,5 +28,14 @@ re: fclean all
 	clear
 test : all clean
 	./$(NAME) 5 800 400 300
+
+leak: re
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./philo 4 310 200 100
+
+drd: re
+	valgrind --tool=drd ./philo 4 310 200 100
+
+helgrind: re
+	valgrind --tool=helgrind --history-level=approx ./philo 4 310 200 100
 
 .PHONY: all clean fclean re debug
