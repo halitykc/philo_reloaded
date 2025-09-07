@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:48 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:18:05 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:29:00 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int	all_ate(t_rules *rules)
 
 void	*bigbrother(void *args)
 {
-	t_rules *rules;
-	int i;
+	t_rules	*rules;
+	int		i;
 
 	rules = (t_rules *)args;
 	ft_usleep(30);

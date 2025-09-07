@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:36 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:18:11 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:32:32 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	print_status(t_philo *philo, char *str)
 
 void	print_death(t_philo *philo, char *str)
 {
-	size_t time;
+	size_t	time;
 
 	pthread_mutex_lock(&philo->rules->write_lock);
 	time = get_current_time() - philo->rules->sim_start;

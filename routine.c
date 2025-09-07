@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:38 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:26:16 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:34:34 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,6 @@ void	lock_eat(t_philo *philo)
 	ft_usleep(1);
 }
 
-void	one_philo(t_philo *philo)
-{
-	pthread_mutex_lock(philo->l_fork);
-	print_status(philo, "has taken a fork");
-	ft_usleep(philo->rules->time_to_die);
-	pthread_mutex_unlock(philo->l_fork);
-}
-
 void	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->rules->dead_lock);
@@ -48,12 +40,7 @@ void	philo_eat(t_philo *philo)
 		return ;
 	}
 	if (philo->philo_id % 2 != 0)
-	{
-		pthread_mutex_lock(philo->l_fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->r_fork);
-		print_status(philo, "has taken a fork");
-	}
+		take_fork1(philo);
 	else
 	{
 		pthread_mutex_lock(philo->r_fork);
@@ -91,7 +78,7 @@ void	philo_think(t_philo *philo)
 
 void	*routine(void *args)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)args;
 	if (philo->philo_id % 2 == 0)

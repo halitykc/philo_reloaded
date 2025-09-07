@@ -6,13 +6,11 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:46 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:20:54 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:32:43 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-///////////////////////////////////////////
 
 void	init_mutex(t_table *table)
 {
@@ -69,8 +67,9 @@ void	init_table(t_table *table, char **argv)
 
 void	start_threads(t_table *table)
 {
-	int i, c;
-	pthread_t bigbro;
+	pthread_t	bigbro;
+	int			i;
+	int			c;
 
 	i = -1;
 	table->rules.sim_start = get_current_time();
