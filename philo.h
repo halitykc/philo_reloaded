@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:40 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:34:45 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:36:10 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void				*routine(void *args);
 void				*bigbrother(void *args);
 void				print_status(t_philo *philo, char *str);
 int					is_starving(t_philo *philo);
-void				take_fork1(t_philo *philo);
 void				one_philo(t_philo *philo);
+void				take_fork1(t_philo *philo);
 
 #endif

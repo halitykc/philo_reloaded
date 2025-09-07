@@ -6,7 +6,7 @@
 /*   By: hyakici <hyakici@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 15:17:44 by hyakici           #+#    #+#             */
-/*   Updated: 2025/09/07 15:18:08 by hyakici          ###   ########.fr       */
+/*   Updated: 2025/09/07 15:38:32 by hyakici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,9 @@ int	main(int argc, char *argv[])
 		init_table(&table, argv);
 		start_threads(&table);
 	}
+	else
+		write(2,
+			"Error :./philo <philo no> <timetodie> <timetoeat> <timetosleep> <timestoeat>",
+			77);
 	return (0);
 }
